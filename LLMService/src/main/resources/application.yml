@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: LLMService
+
+server:
+  port: 8082
+
+eureka:
+  client:
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+
+## Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        # Exposes monitoring for every endpoint
+        # through /actuator/metrics
+        include: "*"
+
+  endpoint:
+    health:
+      # Adds an endpoint to monitor service health
+      # /actuator/health
+      show-details: always
+
+  info:
+    env:
+      # Adds an endpoint to monitor environment info
+      # /actuator/env
+      enabled: true
