@@ -23,5 +23,5 @@ from Controller.PreferenciasController import views as preferenciasController
 urlpatterns = [
     #    path('admin/', admin.site.urls),
     path('prompt/', promptController.prompt, name='prompt'),
-    path('preferencias/', preferenciasController.insertarPreferencias, name='prompt'),
+    path('preferencias/', preferenciasController.insertarPreferencias, name='preferencias'),
 ]
