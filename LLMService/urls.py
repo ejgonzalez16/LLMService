@@ -17,11 +17,10 @@ Including another URLconf
 # from django.contrib import admin
 from django.urls import path
 
-from Controller.PromptController import views as promptController
-from Controller.PreferenciasController import views as preferenciasController
+from Controller.Controller import views as views
 
 urlpatterns = [
     #    path('admin/', admin.site.urls),
-    path('prompt/', promptController.prompt, name='prompt'),
-    path('preferencias/', preferenciasController.insertarPreferencias, name='preferencias'),
+    path('prompt/', views.prompt, name='prompt'),
+    path('preferencias/', views.insertarPreferencias, name='preferencias'),
 ]

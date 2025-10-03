@@ -1,18 +1,28 @@
+import pdb
 from tokenize import String
 
 from django.shortcuts import render
 from django.http import JsonResponse
 
 from Model.PreferenciasDTO import PreferenciasDTO
-from Service import PreferenciasService as preferenciasService
+from Service.PromptService import obtenerRespuestaPrompt
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
-import pdb
-
-from Model import globals
+from Service import PreferenciasService as preferenciasService
 
 # Create your views here.
+
+@csrf_exempt
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def prompt(request):
+    mensaje = request.GET.get("mensaje")
+    if mensaje:
+        respuesta = obtenerRespuestaPrompt(mensaje)
+        return JsonResponse(respuesta, safe=False, status=200)
+    else:
+        return JsonResponse({"error": "Debe enviar un parámetro 'mensaje'"}, status=400)
 
 @csrf_exempt
 @api_view(['POST'])
