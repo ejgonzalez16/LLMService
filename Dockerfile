@@ -39,4 +39,4 @@ COPY .. .
 EXPOSE 8001
 
 # Comando por defecto para correr la app con gunicorn
-CMD ["gunicorn", "LLMService.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "1", "--log-level", "debug", "--reload"]
+CMD ["gunicorn", "LLMService.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "1"]
