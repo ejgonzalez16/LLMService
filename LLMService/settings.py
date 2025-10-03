@@ -131,3 +131,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+KEYCLOAK_CONFIG = {
+    "SERVER_URL": "http://keycloak:9090/",
+    "REALM": "master",
+    "CLIENT_ID": "hpe-service",
+    "VERIFY_SSL": False,
+}
