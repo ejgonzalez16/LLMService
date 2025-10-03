@@ -6,6 +6,7 @@ from Model import globals
 from datetime import datetime
 
 def insertarPreferencias(idUsuario, prescripciones):
+    globals.obtenerEjerciciosYRangos()
     prompt = (
          f"A partir del estado físico: '{prescripciones}', "
          f"asigna un 'idTipoRango' de {globals.tiposRango_json} "
@@ -32,7 +33,7 @@ def insertarPreferencias(idUsuario, prescripciones):
         }
     }
 
-    resp = requests.post(f"http://10.101.136.108:11434/api/chat", json=payload)
+    resp = requests.post(f"http://10.101.136.200:11434/api/chat", json=payload)
     print(resp.json()['message']['content'])
 
     try:

@@ -7,18 +7,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from Service import PreferenciasService as preferenciasService
 
-# Create your views here.
-
-@csrf_exempt
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def prompt(request):
-    mensaje = request.GET.get("mensaje")
-    if mensaje:
-        respuesta = obtenerRespuestaPrompt(mensaje)
-        return JsonResponse(respuesta, safe=False, status=200)
-    else:
-        return JsonResponse({"error": "Debe enviar un parámetro 'mensaje'"}, status=400)
 
 @csrf_exempt
 @api_view(['POST'])
@@ -29,7 +17,7 @@ def insertarPreferencias(request):
     if idUsuario and preferencias:
         preferenciasDTO = PreferenciasDTO(idUsuario, preferencias)
         data = preferenciasService.insertarPreferencias(preferenciasDTO.idUsuario, preferenciasDTO.preferencias)
-        if data == "Controller":
+        if data == "PreferenciasController":
             return JsonResponse("No se pudo hacer la consulta al LLM correctamente", safe=False, status=500)
         if data == "":
             return JsonResponse("internal server error", safe=False, status=500)

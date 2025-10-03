@@ -30,4 +30,3 @@ def obtenerEjerciciosYRangos():
         ensure_ascii=False
     )
 
-obtenerEjerciciosYRangos()

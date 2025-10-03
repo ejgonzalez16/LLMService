@@ -18,7 +18,6 @@ def insertarPreferencias(preferencias_list):
 
     with connection.cursor() as cur:
         cur.executemany(sql, valores)
-        connection.commit()
         print(f"{cur.rowcount} registros insertados")
         if(cur.rowcount > 0):
             return True
@@ -33,5 +32,4 @@ def desactivarPreferencias(idUsuario):
     """
     with connection.cursor() as cur:
         cur.execute(sql, (idUsuario,))
-        connection.commit()
         print(f"{cur.rowcount} registros actualizados a esActiva=0 para idUsuario={idUsuario}")
