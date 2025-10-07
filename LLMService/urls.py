@@ -18,8 +18,10 @@ Including another URLconf
 from django.urls import path
 
 from Controller.PreferenciasController import views as views
+from Controller.RecomendacionController import views as recomendacion
 
 urlpatterns = [
     #    path('admin/', admin.site.urls),
     path('preferencias/', views.insertarPreferencias, name='insertarPreferencias'),
+    path('recomendacion/', recomendacion.obtenerRecomendacion, name='recomendacion'),
 ]

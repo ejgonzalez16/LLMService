@@ -8,8 +8,9 @@ def getPreferencias(idUsuario):
             FROM preferenciasusuario
             WHERE idUsuario = %s AND esActiva = 1
             """
+    valores = (idUsuario,)
     with connection.cursor() as cur:
-        cur.execute(sql, idUsuario)
+        cur.execute(sql, valores)
         filas = cur.fetchall()
 
     if not filas:

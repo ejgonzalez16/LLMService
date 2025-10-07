@@ -61,9 +61,6 @@ def obtenerPreferenciasUsuario(idUsuario):
         sys.exit(1)
 
     preferencias = preferenciasRepository.getPreferencias(idUsuario)
-    if not preferencias:
-        print("Error crítico: No se pudieron cargar las preferencias.")
-        sys.exit(1)
 
     articulaciones = articulacionesRepository.getArticulaciones()
     if not articulaciones:
@@ -71,14 +68,8 @@ def obtenerPreferenciasUsuario(idUsuario):
         sys.exit(1)
 
     estadisticasEjercicioUsuario = estadisticasEjercicioUsuarioRepository.getEstadisticasEjercicios(idUsuario)
-    if not estadisticasEjercicioUsuario:
-        print("Error crítico: No se pudieron cargar las estadisticasEjercicioUsuario.")
-        sys.exit(1)
 
     estadisticasArticulacionUsuario = estadisticasArticulacionUsuarioRepository.getEstadisticasArticulacion(idUsuario)
-    if not estadisticasArticulacionUsuario:
-        print("Error crítico: No se pudieron cargar las estadisticasArticulacionUsuario.")
-        sys.exit(1)
 
     tiposRango_json = json.dumps(
         [{"idTipoRango": t.id, "nombre": t.nombre} for t in tiposRango],
@@ -107,7 +98,7 @@ def obtenerPreferenciasUsuario(idUsuario):
 
     estadisticas_ejercicios_json = json.dumps(
         [{"repeticionesCorrectas": e.peso, "idArticulacion": e.repeticionesRealizadas} for e in
-         estadisticasArticulacionUsuario],
+         estadisticasEjercicioUsuario],
         ensure_ascii=False
     )
 
