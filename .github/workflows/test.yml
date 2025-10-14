@@ -2,33 +2,37 @@ name: Run Django Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   test:
-    runs-on: [ llm, service ]
+    runs-on: ubuntu-latest  # ✅ usa Ubuntu, no tus runners personalizados (llm, service)
 
     steps:
       # 1️⃣ Clonar el repositorio
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2️⃣ Configurar Python
+      # 2️⃣ Instalar dependencias del sistema necesarias para mysqlclient
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config default-libmysqlclient-dev build-essential
+
+      # 3️⃣ Configurar Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # 3️⃣ Instalar dependencias
-      - name: Install dependencies
+      # 4️⃣ Instalar dependencias del proyecto
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest pytest-django
+          pip install pytest pytest-django xmlrunner
 
       # 5️⃣ Ejecutar migraciones
       - name: Run migrations
@@ -39,9 +43,11 @@ jobs:
       - name: Run Django tests
         run: |
           mkdir -p test-results
-          python manage.py test --verbosity=2 --noinput --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --output-file test-results/junit.xml
+          python manage.py test --verbosity=2 --noinput \
+            --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner \
+            --output-file test-results/junit.xml
 
-      # 7️⃣ Publicar resumen visual (como el que viste en tu workflow de Spring Boot)
+      # 7️⃣ Publicar resumen visual bonito
       - name: 📊 Publish JUnit Test Report
         uses: mikepenz/action-junit-report@v4
         with:
