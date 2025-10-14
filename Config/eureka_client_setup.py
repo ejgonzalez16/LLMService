@@ -1,7 +1,7 @@
 from py_eureka_client import eureka_client
 
 # Dirección del servidor Eureka
-EUREKA_SERVER = "http://eureka:8761/eureka/"
+EUREKA_SERVER = "http://10.43.102.146:8761/eureka/"
 
 # Registrar el microservicio
 eureka_client.init(
