@@ -18,7 +18,6 @@ jobs:
       # 2️⃣ Instalar dependencias del sistema necesarias para mysqlclient
       - name: Install system dependencies
         run: |
-          sudo apt-get update
           sudo apt-get install -y pkg-config default-libmysqlclient-dev build-essential
 
       # 3️⃣ Configurar Python
