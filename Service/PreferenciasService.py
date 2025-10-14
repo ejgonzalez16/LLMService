@@ -33,7 +33,7 @@ def insertarPreferencias(idUsuario, prescripciones):
         }
     }
 
-    resp = requests.post(f"http://10.101.136.233:11434/api/chat", json=payload)
+    resp = requests.post(f"http://10.101.137.210:11434/api/chat", json=payload)
     print(resp.json()['message']['content'])
 
     try:
