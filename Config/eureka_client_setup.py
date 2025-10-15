@@ -3,15 +3,14 @@ import psutil
 
 # Dirección del servidor Eureka
 EUREKA_SERVER = "http://10.43.102.146:8761/eureka/"
-IP_VPN = "10.101.138.234"
 
-# Registrarlo
+ip = "10.101.138.234"
+# Registrar el microservicio
 eureka_client.init(
     eureka_server=EUREKA_SERVER,
     app_name="llm-service",      # Nombre de tu servicio
     instance_port=8001,        # Puerto de Django
-    host_name=IP_VPN, # Host de la instancia
-    prefer_ip=True,
+    instance_host=ip, # Host de la instancia
     renewal_interval_in_secs=10,
     duration_in_secs=30,
 )
