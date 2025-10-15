@@ -10,6 +10,7 @@ eureka_client.init(
     app_name="llm-service",      # Nombre de tu servicio
     instance_port=8001,        # Puerto de Django
     instance_host="10.101.138.234", # Host de la instancia
+    prefer_ip=True,
     renewal_interval_in_secs=10,
     duration_in_secs=30,
 )
