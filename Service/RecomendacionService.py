@@ -93,7 +93,7 @@ def obtenerRecomendacion(idUsuario):
         }
     }
 
-    resp = requests.post(f"http://10.101.138.234:11434/api/chat", json=payload)
+    resp = requests.post(f"http://localhost:11434/api/chat", json=payload)
     print(resp.json()['message']['content'])
     try:
         data = json.loads(resp.json()['message']['content'])
