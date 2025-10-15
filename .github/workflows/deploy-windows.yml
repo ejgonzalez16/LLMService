@@ -1,0 +1,37 @@
+name: Deploy in machine
+
+# Al hacer push al main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    # Pide un runner self-hosted que sea Windows
+    runs-on: [llm, service, windows]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Show runner info
+        run: |
+          Write-Host "Runner: $env:RUNNER_NAME"
+          Write-Host "Workspace: $env:GITHUB_WORKSPACE"
+          whoami
+        shell: pwsh
+
+      - name: Make deploy script executable
+        # En Windows no hace falta chmod, pero verifica que sea .ps1
+        run: |
+          Get-ChildItem .\deploy-llm.ps1
+        shell: pwsh
+
+      - name: Run deploy
+        # Ejecuta el script PowerShell
+        run: |
+          .\deploy-llm.ps1
+        shell: pwsh
