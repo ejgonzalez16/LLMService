@@ -26,6 +26,13 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Instalar pip
+        run: |
+          curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+          python3 get-pip.py
+          python3 -m pip install --upgrade pip
+
+
       # 4Instalar dependencias del proyecto
       - name: Install Python dependencies
         run: |
