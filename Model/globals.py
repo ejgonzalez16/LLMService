@@ -1,5 +1,22 @@
-from Model.PreferenciasUsuario import PreferenciasUsuario
+import json
+import sys
+from Repository import TiposRangoRepository as tiposRangoRepository
+from openai import OpenAI
+from Repository import EjerciciosRepository as ejerciciosRepository
+from Repository import ArticulacionesRepository as articulacionesRepository
+from Repository import PreferenciasUsuarioRepository as preferenciasRepository
+from huggingface_hub import InferenceClient
+from Repository import EstadisticasEjercicioUsuarioRepository as estadisticasEjercicioUsuarioRepository
+from Repository import EstadisticasArticulacionUsuarioRepository as estadisticasArticulacionUsuarioRepository
 
+HF_TOKEN = "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"
+
+client = OpenAI(
+    base_url="https://router.huggingface.co/v1",
+    api_key=HF_TOKEN,
+)
+
+modelo = "gpt-5-mini"
 tiposRango_json = []
 ejercicios_json = []
 messages = []
@@ -8,17 +25,6 @@ articulaciones_json = []
 estadisticas_ejercicios_json = []
 estadisticas_articulaciones_json = []
 ip = "10.101.139.210"
-
-import json
-import sys
-import requests
-from Repository import TiposRangoRepository as tiposRangoRepository
-from Repository import EjerciciosRepository as ejerciciosRepository
-from Repository import ArticulacionesRepository as articulacionesRepository
-from Repository import PreferenciasUsuarioRepository as preferenciasRepository
-from Repository import EstadisticasEjercicioUsuarioRepository as estadisticasEjercicioUsuarioRepository
-from Repository import EstadisticasArticulacionUsuarioRepository as estadisticasArticulacionUsuarioRepository
-
 
 def obtenerEjerciciosYRangos():
     global tiposRango_json

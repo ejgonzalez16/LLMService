@@ -1,7 +1,6 @@
 from django.http import JsonResponse
 
 from Model.PreferenciasDTO import PreferenciasDTO
-from Service.PromptService import obtenerRespuestaPrompt
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes

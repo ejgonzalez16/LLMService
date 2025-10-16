@@ -25,7 +25,7 @@ def obtenerRecomendacion(idUsuario):
     {globals.preferencias_json}
     """
 
-    if globals.estadisticas_ejercicios_json.__sizeof__() != 0:
+    if globals.estadisticas_ejercicios_json != '[]':
         prompt += f"""
         En la última semana, el usuario **ha realizado los siguientes ejercicios**:
         {globals.estadisticas_ejercicios_json}
@@ -82,21 +82,36 @@ def obtenerRecomendacion(idUsuario):
     """
     print(prompt)
 
-    mensaje = [{"role": "user", "content": prompt}]
-    payload = {
-        "model": "Goosedev/luna",
-        "messages": mensaje,
-        "stream": False,
-        "options": {
-            "temperature": 0.3,
-            "num_predict": 700  # límite de tokens reducido
-        }
-    }
+    response = globals.client.chat.completions.create(
+        model="meta-llama/Llama-3.1-8B-Instruct:fireworks-ai",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+        max_tokens=700,
+        temperature=0.3
+    )
 
-    resp = requests.post(f"http://{globals.ip}:11434/api/chat", json=payload)
-    print(resp.json()['message']['content'])
+    #mensaje = [{"role": "user", "content": prompt}]
+    #payload = {
+    #    "model": "Goosedev/luna",
+    #    "messages": mensaje,
+    #    "stream": False,
+    #    "options": {
+    #        "temperature": 0.3,
+    #        "num_predict": 700  # límite de tokens reducido
+    #    }
+    #}
+
+    #resp = requests.post(f"http://{globals.ip}:11434/api/chat", json=payload)
+
+    #print(response.json()['message']['content'])
+    print(response.choices[0].message.content)
     try:
-        data = json.loads(resp.json()['message']['content'])
+        #data = json.loads(response.json()['message']['content'])
+        data = json.loads(response.choices[0].message.content)
     except (TypeError, ValueError) as e:
         return "PreferenciasController"
 

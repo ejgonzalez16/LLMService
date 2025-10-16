@@ -22,21 +22,37 @@ def insertarPreferencias(idUsuario, prescripciones):
      )
     print(prompt)
 
-    mensaje = [{"role": "user", "content": prompt}]
-    payload = {
-        "model": "Goosedev/luna",
-        "messages": mensaje,
-        "stream": False,
-        "options": {
-            "temperature": 0.0,
-            "num_predict": 512  # suficiente para toda la lista JSON
-        }
-    }
-    resp = requests.post(f"http://{globals.ip}:11434/api/chat", json=payload)
-    print(resp.json()['message']['content'])
+    response = globals.client.chat.completions.create(
+        model="meta-llama/Llama-3.1-8B-Instruct:fireworks-ai",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+        max_tokens=512,
+        temperature=0.1
+    )
+
+    #mensaje = [{"role": "user", "content": prompt}]
+    #payload = {
+    #    "model": "Goosedev/luna",
+    #    "messages": mensaje,
+    #    "stream": False,
+    #    "options": {
+    #        "temperature": 0.0,
+    #        "num_predict": 512  # suficiente para toda la lista JSON
+    #    }
+    #}
+    #resp = requests.post(f"http://{globals.ip}:11434/api/chat", json=payload)
+
+
+    #print(resp.json()['message']['content'])
+    print(response.choices[0].message.content)
 
     try:
-        data = json.loads(resp.json()['message']['content'])
+        #data = json.loads(resp.json()['message']['content'])
+        data = json.loads(response.choices[0].message.content)
     except (TypeError, ValueError) as e:
         return "LLM"
 
