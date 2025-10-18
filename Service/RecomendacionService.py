@@ -62,7 +62,7 @@ def obtenerRecomendacion(idUsuario):
       - Su frecuencia y tipo de ejercicios realizados.
       - Su rendimiento por articulación.
       - Sus preferencias en tipos de rango de movimiento.
-      - Repeticiones correctas (es algo que el usuario debe seguir haciendo) e incorrectas (algo que el usuario debe corregir).
+      - Recomendar al usuario centrarse más en la técnica de los ejercicios que el peso que levanta, enfocandose en maxmizar el porcentaje repeticiones correctas.
       - Peso levantado.
       - Las áreas que requieren mejora o refuerzo.
 
