@@ -43,9 +43,9 @@ def obtenerRecomendacion(idUsuario):
 
     El JSON debe tener exactamente esta estructura:
     {
-      "recomendacionGeneral": "texto explicativo de alrededor de 300 tokens, con saltos de línea escapados (usa \\n, no los pongas directos)",
+      "recomendacionGeneral": "texto explicativo de alrededor de 50 tokens, con saltos de línea escapados (usa \\n, no los pongas directos)",
       "ejercicioRecomendado": {
-        "explicación": "explicación clara y breve (máximo 6 líneas) sobre por qué se recomienda ese ejercicio, también con \\n escapados",
+        "explicación": "explicación clara y breve (máximo 3 líneas) sobre por qué se recomienda ese ejercicio, también con \\n escapados",
         "nombre": "nombre exacto del ejercicio, debe coincidir exactamente con uno del catálogo de ejercicios proporcionado",
         "idEjercicio": número entero que corresponda al id exacto del ejercicio en el catálogo
       }
@@ -74,9 +74,9 @@ def obtenerRecomendacion(idUsuario):
     - No menciones que el texto está en formato JSON ni hagas referencias al formato en la respuesta.
 
     📏 Restricciones:
-    - La “recomendacionGeneral” NO PUEDE SUPERAR LOS **300 tokens**.
+    - La “recomendacionGeneral” NO PUEDE SUPERAR LOS **50 tokens**.
     - En "recomendaciónGeneral" **no** menciones el mismo ejercicio que aparece en "ejercicioRecomendado".
-    - “ejercicioRecomendado” debe complementar la recomendación con una explicación breve y clara (máximo 6 líneas).
+    - “ejercicioRecomendado” debe complementar la recomendación con una explicación breve y clara (máximo 3 líneas).
 
     📦 Entrega únicamente el JSON final, sin ```json ni ``` al inicio o al final.
     """
@@ -90,7 +90,7 @@ def obtenerRecomendacion(idUsuario):
                 "content": prompt,
             }
         ],
-        max_tokens=700,
+        max_tokens=300,
         temperature=0.3
     )
 
