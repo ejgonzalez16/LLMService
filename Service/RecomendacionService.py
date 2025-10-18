@@ -67,7 +67,7 @@ def obtenerRecomendacion(idUsuario):
       - Las áreas que requieren mejora o refuerzo.
 
     🧠 Detalles de redacción:
-    - **Háblale directamente al usuario en segunda persona** (“tú”, “te”, “tu”) como si fueras su entrenador personal.
+    - **Háblale directamente al usuario en segunda persona** como si fueras su entrenador personal.
     - Usa un tono **cercano, motivador y profesional**.
     - Divide las ideas con saltos de línea (`\\n\\n`) para separar logros, técnica, control de articulaciones, errores y motivación.
     - Evita frases impersonales como “el usuario ha hecho” o “se recomienda”. En su lugar, di “has hecho”, “deberías”, “te recomiendo”, “mantén”.
