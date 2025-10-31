@@ -54,7 +54,7 @@ jobs:
       - name: Run Django tests
         run: |
           mkdir -p test-results
-          pytest Controller/PreferenciasController/tests.py --ds=LLMService.settings --junitxml=test-results/junit.xml --maxfail=5 --disable-warnings -v
+          pytest Controller/PreferenciasController/tests.py Controller/RecomendacionController/tests.py --ds=LLMService.settings --junitxml=test-results/junit.xml --maxfail=5 --disable-warnings -v
 
       # Publicar resumen visual bonito
       - name: 📊 Publish JUnit Test Report

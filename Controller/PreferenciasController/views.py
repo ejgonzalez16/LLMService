@@ -14,6 +14,8 @@ def insertarPreferencias(request , idUsuario: str):
     preferencias = request.data.get("prescripciones")
     if idUsuario and preferencias:
         preferenciasDTO = PreferenciasDTO(idUsuario, preferencias)
+        if(preferenciasService.verificarUsuario(idUsuario) == False):
+            return JsonResponse({"error": "Ese idUsuario no existe"}, status=400)
         data = preferenciasService.insertarPreferencias(preferenciasDTO.idUsuario, preferenciasDTO.preferencias)
         if data == "PreferenciasController":
             return JsonResponse("No se pudo hacer la consulta al LLM correctamente", safe=False, status=500)

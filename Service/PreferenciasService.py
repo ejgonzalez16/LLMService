@@ -1,9 +1,15 @@
 from Model.PreferenciasUsuario import PreferenciasUsuario
 from Repository import PreferenciasUsuarioRepository as preferenciasUsuarioRepository
+from Repository import UsuarioRepository as usuarioRepository
 import requests
 import json
 from Model import globals
 from datetime import datetime
+
+
+def verificarUsuario(idUsuario):
+    resultado = usuarioRepository.verificarIdUsuario(idUsuario)
+    return resultado
 
 def insertarPreferencias(idUsuario, prescripciones):
     globals.obtenerEjerciciosYRangos()

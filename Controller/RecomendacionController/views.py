@@ -9,6 +9,8 @@ import Service.RecomendacionService as recomendacionService
 @permission_classes([IsAuthenticated])
 def obtenerRecomendacion(request, idUsuario: str):
     if idUsuario:
+        if(recomendacionService.verificarUsuario(idUsuario) == False):
+            return JsonResponse({"error": "Ese idUsuario no existe"}, safe=False, status=400)
         data = recomendacionService.obtenerRecomendacion(idUsuario)
         if data == "PreferenciasController":
             return JsonResponse("No se pudo hacer la consulta al LLM correctamente", safe=False, status=500)

@@ -80,6 +80,7 @@ DATABASES = {
         "USER": "root",
         "PASSWORD": "argydb123",
         "HOST": "argy-db",
+        #"HOST": "10.43.102.146",
         "PORT": "3306",
         "OPTIONS": {
             "charset": "utf8mb4",
@@ -143,6 +144,7 @@ REST_FRAMEWORK = {
 
 KEYCLOAK_CONFIG = {
     "SERVER_URL": "http://keycloak:8080/",
+    #"SERVER_URL": "https://argyspotvpn.duckdns.org/keycloak/",
     "REALM": "master",
     "CLIENT_ID": "hpe-service",
     "VERIFY_SSL": False,

@@ -24,6 +24,17 @@ class preferenciasControllerTest(TestCase):
             {"id": 9, "names": "Pull Ups"},
             {"id": 10, "names": "Dips"},
         ]
+
+        articulaciones_data = [
+            {"id": 7, "nombre": "Oreja"},
+            {"id": 11, "nombre": "Hombro"},
+            {"id": 13, "nombre": "Codo"},
+            {"id": 15, "nombre": "Muñeca"},
+            {"id": 23, "nombre": "Cadera"},
+            {"id": 25, "nombre": "Rodilla"},
+            {"id": 27, "nombre": "Tobillo"},
+            {"id": 31, "nombre": "Dedo del pie"}
+        ]
         with connection.cursor() as cursor:
             cursor.execute("""
                                        CREATE TABLE IF NOT EXISTS usuarios (
@@ -57,26 +68,62 @@ class preferenciasControllerTest(TestCase):
                                 names VARCHAR(100)
                             )
                         """)
+
+
             cursor.execute("""DELETE FROM ejercicios
                                         
                                     """)
-            with connection.cursor() as cursor:
-                for ejercicio in ejercicios_data:
-                    cursor.execute("""
-                        INSERT IGNORE INTO ejercicios (id, names)
-                        VALUES (%s, %s)
-                    """, [ejercicio["id"], ejercicio ["names"]])
-            with connection.cursor() as cursor:
+            for ejercicio in ejercicios_data:
                 cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS preferenciasusuario (
-                        id INT PRIMARY KEY AUTO_INCREMENT,
-                        idusuario VARCHAR(100),
-                        idtiporango INT,
-                        fecha DATETIME,
-                        esactiva BOOLEAN,
-                        idejercicio INT
-                    )
-                """)
+                    INSERT IGNORE INTO ejercicios (id, names)
+                    VALUES (%s, %s)
+                """, [ejercicio["id"], ejercicio ["names"]])
+
+            cursor.execute("""
+                                                    CREATE TABLE IF NOT EXISTS articulaciones (
+                                                        id INT PRIMARY KEY,
+                                                        nombre VARCHAR(100)
+                                                    )
+                                                """)
+
+            for articulacion in articulaciones_data:
+                cursor.execute("""
+                    INSERT IGNORE INTO articulaciones (id, nombre)
+                    VALUES (%s, %s)
+                """, [articulacion["id"], articulacion ["nombre"]])
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS preferenciasusuario (
+                    id INT PRIMARY KEY AUTO_INCREMENT,
+                    idusuario VARCHAR(100),
+                    idtiporango INT,
+                    fecha DATETIME,
+                    esactiva BOOLEAN,
+                    idejercicio INT
+                )
+            """)
+
+            cursor.execute("""
+                            CREATE TABLE IF NOT EXISTS estadisticasejerciciousuario (
+                                id INT PRIMARY KEY AUTO_INCREMENT,
+                                idUsuario INT,
+                                idpreferenciausuario INT,
+                                repeticionesrealizadas INT,
+                                peso INT,
+                                fecha DATETIME
+                            )
+                        """)
+
+            cursor.execute("""
+                                        CREATE TABLE IF NOT EXISTS estadisticasarticulacionusuario (
+                                            id INT PRIMARY KEY AUTO_INCREMENT,
+                                            idUsuario INT,
+                                            idarticulacion INT,
+                                            repeticionescorrectas INT,
+                                            idestadisticaejercicio INT,
+                                            fecha DATETIME
+                                        )
+                                    """)
 
     def setUp(self):
         # Crear datos de prueba
@@ -97,51 +144,31 @@ class preferenciasControllerTest(TestCase):
         else:
             print("Error:", response.status_code, response.text)
 
-    def testInsertarPreferencias(self):
+    def testGetRecomendacion(self):
         # Suponiendo que tu view tiene un nombre en urls.py
-        url = reverse('insertarPreferencias', args=[self.idUsuario])
-        payload = {
-            "prescripciones": self.prescripciones
-        }
+        url = reverse('recomendacion', args=[self.idUsuario])
         from rest_framework.test import APIClient
         client = APIClient()
         client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
-        response = client.post(url, data=json.dumps(payload), content_type='application/json')
+        response = client.get(url, content_type='application/json')
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content.decode('utf-8'))
         self.assertIsNotNone(data)
 
-    def testInsertarPreferenciasInvalidIdUsuario(self):
+    def testGetRecomendacionInvalidIdUsuario(self):
         # Suponiendo que tu view tiene un nombre en urls.py
         self.idUsuario = "MYID"
-        url = reverse('insertarPreferencias', args=[self.idUsuario])
-        payload = {
-            "prescripciones": self.prescripciones
-        }
+        url = reverse('recomendacion', args=[self.idUsuario])
         from rest_framework.test import APIClient
         client = APIClient()
         client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
-        response = client.post(url, data=json.dumps(payload), content_type='application/json')
+        response = client.get(url, content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
-    def testInsertarPreferenciasNoPrescripciones(self):
+    def testGetRecomendacionWithNoAuth(self):
         # Suponiendo que tu view tiene un nombre en urls.py
-        url = reverse('insertarPreferencias', args=[self.idUsuario])
-        payload = {
-        }
+        url = reverse('recomendacion', args=[self.idUsuario])
         from rest_framework.test import APIClient
         client = APIClient()
-        client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
-        response = client.post(url, data=json.dumps(payload), content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-
-    def testInsertarPreferenciasWithNoAuth(self):
-        # Suponiendo que tu view tiene un nombre en urls.py
-        url = reverse('insertarPreferencias', args=[self.idUsuario])
-        payload = {
-            "prescripciones": self.prescripciones
-        }
-        from rest_framework.test import APIClient
-        client = APIClient()
-        response = client.post(url, data=json.dumps(payload), content_type='application/json')
+        response = client.get(url, content_type='application/json')
         self.assertEqual(response.status_code, 403)

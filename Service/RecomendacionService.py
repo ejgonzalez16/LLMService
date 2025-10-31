@@ -1,9 +1,12 @@
 import ast
-
 import requests
-
+from Repository import UsuarioRepository as usuarioRepository
 from Model import globals
 import json
+
+def verificarUsuario(idUsuario):
+    resultado = usuarioRepository.verificarIdUsuario(idUsuario)
+    return resultado
 
 def obtenerRecomendacion(idUsuario):
     globals.obtenerPreferenciasUsuario(idUsuario)
