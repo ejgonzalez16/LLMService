@@ -27,7 +27,7 @@ class preferenciasControllerTest(TestCase):
         with connection.cursor() as cursor:
             cursor.execute("""
                                        CREATE TABLE IF NOT EXISTS usuarios (
-                                           idUsuario VARCHAR(200) PRIMARY KEY
+                                           idusuario VARCHAR(200) PRIMARY KEY
                                        )
                            """)
             cursor.execute("""INSERT IGNORE INTO usuarios (idUsuario)
