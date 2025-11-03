@@ -2,9 +2,9 @@ from django.db import connection
 
 def verificarIdUsuario(idUsuario):
     sql = """
-        SELECT idusuario
+        SELECT id
         FROM usuarios
-        WHERE idusuario = %s
+        WHERE id = %s
         """
     valores = (idUsuario,)
     with connection.cursor() as cur:
