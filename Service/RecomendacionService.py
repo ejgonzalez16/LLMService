@@ -23,6 +23,9 @@ def obtenerRecomendacion(idUsuario):
 
     - **Articulaciones evaluadas**:
     {globals.articulaciones_json}
+    
+    - **Prescripciones del usuario**:
+    {globals.prescripciones}
 
     - **Preferencias del usuario en tipos de rango para cada ejercicio**:
     {globals.preferencias_json}
@@ -48,7 +51,7 @@ def obtenerRecomendacion(idUsuario):
     {
       "recomendacionGeneral": "texto explicativo de alrededor de 50 tokens, minimo 35 tokens, con saltos de línea escapados (usa \\n, no los pongas directos)",
       "ejercicioRecomendado": {
-        "explicación": "explicación clara y breve (máximo 3 líneas) sobre por qué se recomienda ese ejercicio, también con \\n escapados",
+        "explicación": "explicación clara y breve (máximo 3 líneas) sobre por qué se recomienda ese ejercicio, también con \\n escapados, **habla del ejercicio y su relación con el usuario con respecto al rendimiento semanal y sus prescripciones**",
         "nombre": "nombre exacto del ejercicio, debe coincidir exactamente con uno del catálogo de ejercicios proporcionado",
         "idEjercicio": número entero que corresponda al id exacto del ejercicio en el catálogo
       }
@@ -61,6 +64,13 @@ def obtenerRecomendacion(idUsuario):
     - **No uses comillas simples** en ningún lugar.
     - El JSON debe ser **100 % válido y cargable con `json.loads()`** sin errores.
     - El ejercicio recomendado **debe existir en el catálogo oficial de ejercicios**.
+        Antes de decidir el ejercicio recomendado:
+            1. Compara el desempeño del usuario en cada ejercicio realizado.
+            2. Evalúa qué articulaciones presentan menor rendimiento.
+            3. Elige un ejercicio del catálogo que **ayude a mejorar la articulación o tipo de movimiento más débil**.
+            4. No elijas ejercicios aleatorios ni el primero de la lista.
+            5. **NO recomiendes** ejercicios en los que se incluyan articulaciones o músculos en los que el usuario tenga complicaciones, dolor, fracturas, etc. Esto lo sabes con las prescripciones del usuario.
+            6. Ten respuestas variadas pero coherentes con el estado del usuario, no te decantes siempre por el mismo ejercicio.
     - La recomendación **debe basarse exclusivamente en el desempeño del usuario en la última semana**, tomando en cuenta:
       - Su frecuencia y tipo de ejercicios realizados.
       - Su rendimiento por articulación.
@@ -93,8 +103,8 @@ def obtenerRecomendacion(idUsuario):
                 "content": prompt,
             }
         ],
-        max_tokens=300,
-        temperature=0.3
+        max_tokens=500,
+        temperature=0.7
     )
 
     #mensaje = [{"role": "user", "content": prompt}]

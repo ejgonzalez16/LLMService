@@ -14,3 +14,19 @@ def verificarIdUsuario(idUsuario):
     if not filas:
         return False
     return True
+
+
+def obtenerPrescripciones(idUsuario):
+    sql = """
+            SELECT prescripciones
+            FROM usuarios
+            WHERE id = %s
+            """
+    valores = (idUsuario,)
+    with connection.cursor() as cur:
+        cur.execute(sql, valores)
+        filas = cur.fetchall()
+
+    if not filas:
+        return ""
+    return filas[0][0]

@@ -8,6 +8,7 @@ from Repository import PreferenciasUsuarioRepository as preferenciasRepository
 from huggingface_hub import InferenceClient
 from Repository import EstadisticasEjercicioUsuarioRepository as estadisticasEjercicioUsuarioRepository
 from Repository import EstadisticasArticulacionUsuarioRepository as estadisticasArticulacionUsuarioRepository
+from Repository import UsuarioRepository as usuarioRepository
 
 HF_TOKEN = "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"
 
@@ -24,6 +25,7 @@ preferencias_json = []
 articulaciones_json = []
 estadisticas_ejercicios_json = []
 estadisticas_articulaciones_json = []
+prescripciones  = ""
 ip = "10.101.139.210"
 
 def obtenerEjerciciosYRangos():
@@ -55,6 +57,7 @@ def obtenerPreferenciasUsuario(idUsuario):
     global estadisticas_ejercicios_json
     global tiposRango_json
     global ejercicios_json
+    global prescripciones
     tiposRango = tiposRangoRepository.getTiposRango()
     print(tiposRango)
     if not tiposRango:
@@ -77,6 +80,8 @@ def obtenerPreferenciasUsuario(idUsuario):
     estadisticasEjercicioUsuario = estadisticasEjercicioUsuarioRepository.getEstadisticasEjercicios(idUsuario)
 
     estadisticasArticulacionUsuario = estadisticasArticulacionUsuarioRepository.getEstadisticasArticulacion(idUsuario)
+
+    prescripciones =  usuarioRepository.obtenerPrescripciones(idUsuario)
 
     tiposRango_json = json.dumps(
         [{"idTipoRango": t.id, "nombre": t.nombre} for t in tiposRango],
