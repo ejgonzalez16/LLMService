@@ -38,7 +38,7 @@ class recomendacionControllerTest(TestCase):
         with connection.cursor() as cursor:
             cursor.execute("""
                                        CREATE TABLE IF NOT EXISTS usuarios (
-                                           id VARCHAR(200) PRIMARY KEY
+                                           id VARCHAR(200) PRIMARY KEY,
                                            prescripciones VARCHAR(200)
                                        )
                            """)
