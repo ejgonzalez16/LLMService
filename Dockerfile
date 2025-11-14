@@ -37,6 +37,7 @@ COPY .. .
 COPY wait-for-mysql.sh /wait-for-mysql.sh
 RUN chmod +x /wait-for-mysql.sh
 
+RUN apt-get update && apt-get install -y default-mysql-client
 
 # Exponemos el puerto de Django
 EXPOSE 8001
