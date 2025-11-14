@@ -34,9 +34,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiamos el proyecto
 COPY .. .
+COPY wait-for-mysql.sh /wait-for-mysql.sh
+RUN chmod +x /wait-for-mysql.sh
+
 
 # Exponemos el puerto de Django
 EXPOSE 8001
 
 # Comando por defecto para correr la app con gunicorn
-CMD ["gunicorn", "LLMService.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "1"]
+ENTRYPOINT ["/wait-for-mysql.sh", "argy-db", "gunicorn", "LLMService.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "1"]
