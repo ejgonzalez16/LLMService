@@ -57,9 +57,10 @@ jobs:
           pytest Controller/PreferenciasController/tests.py Controller/RecomendacionController/tests.py --ds=LLMService.settings --junitxml=test-results/junit.xml --maxfail=5 --disable-warnings -v
 
       # Publicar resumen visual bonito
-      - name: 📊 Publish JUnit Test Report
+      - name: 📊 Publish Pytest Test Report
         uses: mikepenz/action-junit-report@v4
         with:
           report_paths: "test-results/junit.xml"
           include_passed: true
+          check_name: "Integración 🔧"
         if: always()
