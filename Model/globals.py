@@ -17,7 +17,7 @@ client = OpenAI(
     api_key=HF_TOKEN,
 )
 
-modelo = "gpt-5-mini"
+modelo = "meta-llama/Llama-3.1-8B-Instruct"
 tiposRango_json = []
 ejercicios_json = []
 messages = []
